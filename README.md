@@ -1,6 +1,5 @@
 # sample_LLM_project
 
-
 ## add Docker volume so data survives container restarts:
 docker rm -f elasticsearch
 

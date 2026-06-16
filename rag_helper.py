@@ -20,23 +20,28 @@ class RAGBase:
 
     def __init__(
         self
-        ,index
         ,llm_client
+        ,index
+        ,index_name = "zoomcamp"
         ,instructions=INSTRUCTIONS
+        ,model = 'claude-haiku-4-5-20251001'
         ,prompt_template=PROMPT_TEMPLATE
         ,search_size_return = 3
-    ):
         
-        self.index = index
+    ):
         self.llm_client = llm_client
+        self.index = index
+        self.index_name = index_name
         self.instructions = instructions
+        self.model = model
         self.prompt_template = prompt_template
         self.search_size_return = search_size_return
+        
 
     def search(self, query,  boost_dict={}):
         fields =  [f"{k}^{v}" for k, v in boost_dict.items()]  or ["question", "answer", "section"]
         results = self.index.search(
-            index="zoomcamp"
+            index=self.index_name
             ,body={
                 "size": self.search_size_return
                 ,"query": {
@@ -73,10 +78,10 @@ class RAGBase:
 
     def llm(self, prompt):
         response = self.llm_client.messages.create(
-            model = "claude-haiku-4-5-20251001" #claude-sonnet-4-6
+            model = self.model
             ,system = self.instructions
             ,messages=[{"role": "user", "content": prompt}]
-            ,max_tokens=20000
+            ,max_tokens=2000
             ,temperature=0
         )
 
