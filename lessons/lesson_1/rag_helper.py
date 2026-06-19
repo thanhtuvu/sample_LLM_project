@@ -22,7 +22,7 @@ class RAGBase:
         self
         ,llm_client
         ,index
-        ,index_name = "zoomcamp"
+        ,index_name = "faq-llm-zoomcamp"
         ,instructions=INSTRUCTIONS
         ,model = 'claude-haiku-4-5-20251001'
         ,prompt_template=PROMPT_TEMPLATE
